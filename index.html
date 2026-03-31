@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Differential Privacy Scrollytelling Lab</title>
+    <meta
+      name="description"
+      content="A scrollytelling introduction to Differential Privacy, Local Differential Privacy, and Randomized Response for middle-school learners."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Sora:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-scene="step-1">
+    <div class="page-glow page-glow--one" aria-hidden="true"></div>
+    <div class="page-glow page-glow--two" aria-hidden="true"></div>
+
+    <header class="hero">
+      <div class="hero__grid">
+        <div class="hero__text">
+          <p class="hero__eyebrow">Privacy Seminar</p>
+          <h1>How can I share a secret privately?</h1>
+          <!-- <p class="hero__lede">
+            Local Differential Privacy.
+          </p>
+          <p class="hero__scroll">Scroll for the story.</p> -->
+        </div>
+
+        <div class="hero__visual">
+          <div class="hero__coinfield" aria-hidden="true"></div>
+        </div>
+      </div>
+    </header>
+
+    <main class="story-layout">
+      <aside class="story-rail" aria-label="Story progress">
+        <div class="story-rail__progress">
+          <span class="story-rail__track"></span>
+          <span class="story-rail__fill" id="story-progress"></span>
+        </div>
+        <ol class="story-rail__chapters">
+          <li class="story-rail__item is-active" data-step-ref="step-1">
+            <button class="story-rail__button" type="button" data-step-ref="step-1" aria-current="step" aria-label="Chapter 1: Intro">
+              <span>01</span>
+              <small>
+                <span class="story-rail__label-full" aria-hidden="true">Intro</span>
+                <span class="story-rail__label-short" aria-hidden="true">Intro</span>
+              </small>
+            </button>
+          </li>
+          <li class="story-rail__item" data-step-ref="step-example">
+            <button class="story-rail__button" type="button" data-step-ref="step-example" aria-label="Chapter 2: Example">
+              <span>02</span>
+              <small>
+                <span class="story-rail__label-full" aria-hidden="true">Example</span>
+                <span class="story-rail__label-short" aria-hidden="true">Ex</span>
+              </small>
+            </button>
+          </li>
+          <li class="story-rail__item" data-step-ref="step-2">
+            <button class="story-rail__button" type="button" data-step-ref="step-2" aria-label="Chapter 3: Randomized response">
+              <span>03</span>
+              <small>
+                <span class="story-rail__label-full" aria-hidden="true">Randomized response</span>
+                <span class="story-rail__label-short" aria-hidden="true">RR</span>
+              </small>
+            </button>
+          </li>
+          <li class="story-rail__item" data-step-ref="step-3">
+            <button class="story-rail__button" type="button" data-step-ref="step-3" aria-label="Chapter 4: Tune the coin">
+              <span>04</span>
+              <small>
+                <span class="story-rail__label-full" aria-hidden="true">Tune the coin</span>
+                <span class="story-rail__label-short" aria-hidden="true">Coin</span>
+              </small>
+            </button>
+          </li>
+          <li class="story-rail__item" data-step-ref="step-4">
+            <button class="story-rail__button" type="button" data-step-ref="step-4" aria-label="Chapter 5: Watch the flow">
+              <span>05</span>
+              <small>
+                <span class="story-rail__label-full" aria-hidden="true">Watch the flow</span>
+                <span class="story-rail__label-short" aria-hidden="true">Flow</span>
+              </small>
+            </button>
+          </li>
+          <li class="story-rail__item" data-step-ref="step-eps-setup">
+            <button class="story-rail__button" type="button" data-step-ref="step-eps-setup" aria-label="Chapter 6: Meet Epsilon">
+              <span>06</span>
+              <small>
+                <span class="story-rail__label-full" aria-hidden="true">Meet &epsilon;</span>
+                <span class="story-rail__label-short" aria-hidden="true">&epsilon;</span>
+              </small>
+            </button>
+          </li>
+          <li class="story-rail__item" data-step-ref="step-eps-live">
+            <button class="story-rail__button" type="button" data-step-ref="step-eps-live" aria-label="Chapter 7: Tune Epsilon">
+              <span>07</span>
+              <small>
+                <span class="story-rail__label-full" aria-hidden="true">Tune &epsilon;</span>
+                <span class="story-rail__label-short" aria-hidden="true">Tune</span>
+              </small>
+            </button>
+          </li>
+          <li class="story-rail__item" data-step-ref="step-5a">
+            <button class="story-rail__button" type="button" data-step-ref="step-5a" aria-label="Chapter 8: RAPPOR">
+              <span>08</span>
+              <small>
+                <span class="story-rail__label-full" aria-hidden="true">RAPPOR</span>
+                <span class="story-rail__label-short" aria-hidden="true">RAP</span>
+              </small>
+            </button>
+          </li>
+          <li class="story-rail__item" data-step-ref="step-5b">
+            <button class="story-rail__button" type="button" data-step-ref="step-5b" aria-label="Chapter 9: Apple trends">
+              <span>09</span>
+              <small>
+                <span class="story-rail__label-full" aria-hidden="true">Apple trends</span>
+                <span class="story-rail__label-short" aria-hidden="true">Apple</span>
+              </small>
+            </button>
+          </li>
+          <li class="story-rail__item" data-step-ref="step-5c">
+            <button class="story-rail__button" type="button" data-step-ref="step-5c" aria-label="Chapter 10: PrivacyGo">
+              <span>10</span>
+              <small>
+                <span class="story-rail__label-full" aria-hidden="true">PrivacyGo</span>
+                <span class="story-rail__label-short" aria-hidden="true">PGo</span>
+              </small>
+            </button>
+          </li>
+        </ol>
+      </aside>
+
+      <section class="scrolly-text" aria-label="Differential Privacy story">
+        <article class="step step--beat is-active" id="step-1" data-step="step-1" data-scene-ref="scene-definition" data-rail-ref="step-1">
+          <div class="step__inner">
+            <p class="step__eyebrow">Differential Privacy</p>
+            <h2>What is it?</h2>
+            <p class="step__lead">
+              Differential privacy is a data privacy method that allows data to
+              be shared without revealing unique information about any one
+              individual.<sup
+                ><a class="footnote-ref" href="#ref-dp-def">[1]</a></sup
+              >
+            </p>
+          </div>
+        </article>
+
+        <article class="step step--beat" id="step-1b" data-step="step-1b" data-scene-ref="scene-definition" data-rail-ref="step-1">
+          <div class="step__inner">
+            <p class="step__eyebrow">Differential Privacy</p>
+            <h2>Who uses it?</h2>
+            <p class="step__lead">
+              Governments, tech companies, and researchers use it. But anyone
+              with an interest in privacy can use it.
+            </p>
+          </div>
+        </article>
+
+        <article class="step step--beat" id="step-1b2" data-step="step-1b2" data-scene-ref="scene-who-why" data-rail-ref="step-1">
+          <div class="step__inner">
+            <p class="step__eyebrow">Differential Privacy</p>
+            <h2>Why use it?</h2>
+            <p class="step__lead">
+              Privacy isn&rsquo;t just about hiding data &mdash; it&rsquo;s a
+              <em>mathematical guarantee</em>. Click each company card to see exactly why they chose differential privacy.
+            </p>
+          </div>
+        </article>
+
+        <article class="step" id="step-example" data-step="step-example" data-scene-ref="step-example" data-rail-ref="step-example">
+          <div class="step__inner">
+            <p class="step__eyebrow">Example</p>
+            <h2>My teacher asks the class to name our pet gerbil.</h2>
+            <p class="step__lead">
+              Our teacher give us the following choices and asks everyone to vote for the name of our
+              <button class="example-reset is-selected" data-example-style="neutral" type="button">
+                pet gerbil
+              </button>
+              .
+            </p>
+            <ul class="step-list step-vote-list">
+              <li>
+                <button class="vote-option" data-example-style="skibidi" type="button">
+                  Rizz Rodent
+                </button>
+              </li>
+              <li>
+                <button
+                  class="vote-option"
+                  data-example-style="rizz"
+                  type="button"
+                >
+                  6-7 Squeaker
+                </button>
+              </li>
+              <li>
+                <button class="vote-option" data-example-style="carl" type="button">
+                  Carl
+                </button>
+              </li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="step step--beat" id="step-example-vote" data-step="step-example-vote" data-scene-ref="scene-example-voting" data-rail-ref="step-example">
+          <div class="step__inner">
+            <p class="step__eyebrow">Example</p>
+            <h2>Everyone likes 6-7 Squeaker and Rizz Rodent.</h2>
+            <p class="step__lead">But I secretly like the name Carl.</p>
+          </div>
+        </article>
+
+        <article class="step step--beat" id="step-example-results" data-step="step-example-results" data-scene-ref="scene-example-results" data-rail-ref="step-example">
+          <div class="step__inner">
+            <p class="step__eyebrow">Example</p>
+            <h2>The vote.</h2>
+            <p class="step__lead">Carl lost 😢</p>
+          </div>
+        </article>
+
+        <!-- NEW: Class Captain Privacy Concern -->
+        <article class="step step--beat" id="step-example-captain" data-step="step-example-captain" data-scene-ref="scene-example-captain" data-rail-ref="step-example">
+          <div class="step__inner">
+            <p class="step__eyebrow">Privacy Problem</p>
+            <h2>Uh oh... the class captain knows!</h2>
+            <p class="step__lead">
+              Our class captain collected everyone's votes. That means he knows exactly who voted for what. 
+            </p>
+            <p>
+              What if he tells his friends? What if your vote gets out? Everyone will know you voted for Carl!
+            </p>
+            <p class="step__note">
+              Click on the students on the right to see who voted for what. This is what the captain can see!
+            </p>
+          </div>
+        </article>
+
+        <article class="step step--beat" id="step-example-privacy" data-step="step-example-privacy" data-scene-ref="scene-example-privacy" data-rail-ref="step-example">
+          <div class="step__inner">
+            <p class="step__eyebrow">Example</p>
+            <h2>Insecure about the vote; confident in my privacy.</h2>
+            <p class="step__lead">
+              Although we voted, I feel secure in my less popular feelings about the name Carl because we used local differential privacy.
+            </p>
+          </div>
+        </article>
+
+        <article class="step step--beat" id="step-example-flow" data-step="step-example-flow" data-scene-ref="scene-example-flow" data-rail-ref="step-example">
+          <div class="step__inner">
+            <p class="step__eyebrow">Example</p>
+            <h2>I didn't even vote for Carl.</h2>
+          </div>
+        </article>
+
+        <article class="step step--beat" id="step-1c" data-step="step-1c" data-scene-ref="scene-compare" data-rail-ref="step-example">
+          <div class="step__inner">
+            <p class="step__eyebrow">Test</p>
+            <h2>Compare two nearly identical class lists.</h2>
+            <p class="step__lead">
+              On the right, only one student changes.
+            </p>
+            <p>
+              Everything else stays the same.
+            </p>
+          </div>
+        </article>
+
+        <article class="step step--beat" id="step-1d" data-step="step-1d" data-scene-ref="scene-compare" data-rail-ref="step-example">
+          <div class="step__inner">
+            <p class="step__eyebrow">Takeaway</p>
+            <h2>The crowd pattern stays. The person fades.</h2>
+            <p class="step__lead">
+              Both releases tell almost the same class story.
+            </p>
+            <p>
+              That is the intuition behind differential privacy.
+            </p>
+          </div>
+        </article>
+
+        <article class="step" id="step-2" data-step="step-2" data-scene-ref="step-2" data-rail-ref="step-2">
+          <div class="step__inner">
+            <p class="step__eyebrow">Mechanism</p>
+            <h2>Randomized response adds noise before the answer leaves you.</h2>
+            <p class="step__lead">
+              Sensitive surveys have an evasive-answer problem, so each student
+              flips coins locally before replying
+              <a class="footnote-ref" href="#ref-dp-def">[1]</a>.
+            </p>
+            <p>
+              First: maybe tell the truth. Otherwise: take a random route.
+            </p>
+            <p class="step__note">
+              The survey collector sees a noisy answer, not the private one.
+            </p>
+          </div>
+        </article>
+
+        <article class="step" id="step-3" data-step="step-3">
+          <div class="step__inner">
+            <p class="step__eyebrow">Chapter 4</p>
+            <h2>The protective part is a coin.</h2>
+            <p class="step__lead">
+              Heads means tell the truth. Tails means answer randomly.
+            </p>
+            <blockquote class="step__pullquote">
+              A little randomness creates a lot of privacy.
+            </blockquote>
+            <p>
+              Click the coin on the right to flip it. Then answer the question based on the result &mdash; your real preference stays private.
+            </p>
+          </div>
+        </article>
+
+        <article class="step" id="step-4" data-step="step-4">
+          <div class="step__inner">
+            <p class="step__eyebrow">Chapter 5</p>
+            <h2>Now look at what the class really thinks.</h2>
+            <p class="step__lead">
+              Even with scrambled answers, we can still learn the true crowd pattern.
+            </p>
+            <p>
+              Below are real aggregated results collected using randomized response &mdash; so no one person&rsquo;s vote is exposed.
+            </p>
+            <p class="step__note">
+              The math &ldquo;corrects&rdquo; for the coin noise to estimate the true rate. No individual answer is ever revealed.
+            </p>
+          </div>
+        </article>
+
+        <!-- ── Chapter 6: Meet ε ─────────────── -->
+        <article class="step" id="step-eps-setup" data-step="step-eps-setup">
+          <div class="step__inner">
+            <p class="step__eyebrow">Chapter 6</p>
+            <h2>Now meet the knob behind the noise.</h2>
+            <p class="step__lead">
+              Remember our gerbil vote? Imagine it wasn&rsquo;t 27 students &mdash; it was
+              <strong>1 million people</strong> casting a secret vote for Carl.
+            </p>
+            <p>
+              In a perfect world, the true count would be stored exactly. But the moment
+              you publish it, anyone can cross-reference it to identify individuals.
+            </p>
+            <p>
+              Differential Privacy solves this with a single parameter called
+              <strong>epsilon (&epsilon;)</strong> &mdash; the &ldquo;privacy knob.&rdquo;
+              The right panel shows the true dataset before any noise is applied.
+            </p>
+            <p class="step__note">
+              Small &epsilon; &rarr; more noise &rarr; stronger privacy.<br>
+              Large &epsilon; &rarr; less noise &rarr; more accurate, but more exposed.
+            </p>
+          </div>
+        </article>
+
+        <!-- ── Chapter 7: Tune ε ─────────────── -->
+        <article class="step" id="step-eps-live" data-step="step-eps-live">
+          <div class="step__inner">
+            <p class="step__eyebrow">Chapter 7</p>
+            <h2>Drag the knob. Watch privacy happen.</h2>
+            <p class="step__lead">
+              Move the &epsilon; slider. The chart updates live &mdash; you see exactly what
+              the world would see after DP noise is applied to the 1 million votes.
+            </p>
+            <p>
+              At low &epsilon; (0.1), the bars jump wildly. At high &epsilon; (5.0),
+              they barely change from the truth. Carl&rsquo;s real count is always
+              hidden inside the noise.
+            </p>
+            <blockquote class="step__pullquote">
+              The crowd pattern survives.<br>No individual is exposed.
+            </blockquote>
+            <p>
+              This is the same guarantee Apple, Google, and the US Census rely on &mdash;
+              just with a much fancier implementation.
+            </p>
+          </div>
+        </article>
+
+        <article class="step" id="step-5a" data-step="step-5a">
+          <div class="step__inner">
+            <p class="step__eyebrow">Chapter 8</p>
+            <h2>Google’s RAPPOR used the same big idea.</h2>
+            <p class="step__lead">
+              Real systems do not use a literal coin, but they do scramble first.
+            </p>
+            <p>
+              Google’s RAPPOR helped Chrome collect certain kinds of statistics
+              while protecting individuals with privacy math
+              <a class="footnote-ref" href="#ref-rappor">[2]</a>.
+            </p>
+            <p>
+              Device first. Randomized report next. Crowd insight at the end.
+            </p>
+          </div>
+        </article>
+
+        <article class="step" id="step-5b" data-step="step-5b">
+          <div class="step__inner">
+            <p class="step__eyebrow">Chapter 9</p>
+            <h2>Apple talks about private trend learning.</h2>
+            <p class="step__lead">
+              A system can learn what is common without reading one full message.
+            </p>
+            <p>
+              Apple has described using Differential Privacy to learn trends
+              like popular emoji and useful keyboard suggestions
+              <a class="footnote-ref" href="#ref-apple-dp">[3]</a>
+              <a class="footnote-ref" href="#ref-apple-ml">[4]</a>.
+            </p>
+            <p>
+              Private contribution in, trend signal out.
+            </p>
+          </div>
+        </article>
+
+        <article class="step" id="step-5c" data-step="step-5c">
+          <div class="step__inner">
+            <p class="step__eyebrow">Chapter 10</p>
+            <h2>PrivacyGo applies this thinking to measurement.</h2>
+            <p class="step__lead">
+              Measurement is useful, but it should not expose who saw what.
+            </p>
+            <p>
+              TikTok has published tools and research around PrivacyGo, which
+              uses privacy-enhancing technologies and includes differential
+              privacy ideas to protect people while still letting advertisers
+              see useful results
+              <a class="footnote-ref" href="#ref-privacygo">[5]</a>
+              <a class="footnote-ref" href="#ref-privacygo-paper">[6]</a>.
+            </p>
+            <blockquote class="step__pullquote">
+              Protected computation in the middle, aggregate insight at the end.
+            </blockquote>
+          </div>
+        </article>
+
+        <!-- ================================================================== -->
+        <!-- CHAPTER 11: K-ANONYMITY -->
+        <!-- ================================================================== -->
+        
+        <!-- Step 1: Meet Sarah -->
+        <article class="step step--beat" id="step-kanon-1" data-step="step-kanon-1" data-scene-ref="scene-kanon-sarah" data-rail-ref="step-kanon">
+          <div class="step__inner">
+            <p class="step__eyebrow">K-Anonymity</p>
+            <h2>Meet Sarah</h2>
+            <p class="step__lead">
+              Sarah is 34 years old. She lives in ZIP code 85281. She was just diagnosed with heart disease.
+            </p>
+            <p>She goes to the hospital for treatment. The hospital records her information in their database.</p>
+            <p>Age: 34. ZIP: 85281. Condition: Heart Disease.</p>
+          </div>
+        </article>
+
+        <!-- Step 2: Database is open -->
+        <article class="step step--beat" id="step-kanon-2" data-step="step-kanon-2" data-scene-ref="scene-kanon-exposed" data-rail-ref="step-kanon">
+          <div class="step__inner">
+            <p class="step__eyebrow">K-Anonymity</p>
+            <h2>The hospital database is open</h2>
+            <p class="step__lead">
+              The receptionist can see Sarah's exact information. The IT staff can access it. Insurance companies request it for billing.
+            </p>
+            <p>Anyone with access can search: 'Show me the 34-year-old from ZIP 85281'</p>
+            <p>Only ONE person matches. It's Sarah. Her medical condition is exposed. This is <strong>k=1</strong>.</p>
+          </div>
+        </article>
+
+        <!-- Step 3: What is k-anonymity? -->
+        <article class="step step--beat" id="step-kanon-3" data-step="step-kanon-3" data-scene-ref="scene-kanon-definition" data-rail-ref="step-kanon">
+          <div class="step__inner">
+            <p class="step__eyebrow">K-Anonymity</p>
+            <h2>What is k-anonymity?</h2>
+            <p class="step__lead">
+              K-anonymity is a privacy technique that groups people together so you can't identify individuals.
+            </p>
+            <p>The 'k' is a number: if k=5, then at least 5 people share the same characteristics.</p>
+            <p>Instead of being unique (k=1), you hide in a group of k people. No one can tell which record is yours!</p>
+          </div>
+        </article>
+
+        <!-- Step 4: How does it work? -->
+        <article class="step step--beat" id="step-kanon-4" data-step="step-kanon-4" data-scene-ref="scene-kanon-transform" data-rail-ref="step-kanon">
+          <div class="step__inner">
+            <p class="step__eyebrow">K-Anonymity</p>
+            <h2>How does it work?</h2>
+            <p class="step__lead">The hospital transforms Sarah's exact data into ranges.</p>
+            <p>Age 34 → <strong>Age Range: 30-40</strong></p>
+            <p>ZIP 85281 → <strong>ZIP Area: 852**</strong></p>
+            <p>Condition stays the same: Heart Disease</p>
+          </div>
+        </article>
+
+        <!-- Step 5: Sarah has company -->
+        <article class="step step--beat" id="step-kanon-5" data-step="step-kanon-5" data-scene-ref="scene-kanon-group" data-rail-ref="step-kanon">
+          <div class="step__inner">
+            <p class="step__eyebrow">K-Anonymity</p>
+            <h2>Now Sarah has company!</h2>
+            <p class="step__lead">With these ranges, Sarah is grouped with 4 other people who also have:</p>
+            <p>• Age 30-40<br>• ZIP Area 852**<br>• Heart Disease</p>
+            <p>Now when someone searches the database, they find 5 people (k=5). They can't tell which one is Sarah!</p>
+          </div>
+        </article>
+
+        <!-- Step 6: Try it yourself (INTERACTIVE) -->
+        <article class="step step--beat" id="step-kanon-6" data-step="step-kanon-6" data-scene-ref="scene-kanon-input" data-rail-ref="step-kanon">
+          <div class="step__inner">
+            <p class="step__eyebrow">K-Anonymity</p>
+            <h2>Try it yourself</h2>
+            <p class="step__lead">Enter your age, ZIP code, and a health concern.</p>
+            <p class="step__instruction">See how you'd be exposed with exact data (k=1), then watch k-anonymity protect you by grouping you with others (k≥5).</p>
+          </div>
+        </article>
+
+        <!-- Step 7: Why does this matter? -->
+        <article class="step step--beat" id="step-kanon-7" data-step="step-kanon-7" data-scene-ref="scene-kanon-why" data-rail-ref="step-kanon">
+          <div class="step__inner">
+            <p class="step__eyebrow">K-Anonymity</p>
+            <h2>Why does this matter?</h2>
+            <p class="step__lead">K-anonymity protects privacy while keeping data useful for research.</p>
+            <p>Doctors can still study 'heart disease in people aged 30-40 in area 852**' for research.</p>
+            <p>But they can't identify Sarah specifically. She's hidden in a group of 5.</p>
+            <p>Privacy is protected. Research continues. Win-win! 🎉</p>
+          </div>
+        </article>
+
+        <!-- Step 8: The tradeoff -->
+        <article class="step step--beat" id="step-kanon-8" data-step="step-kanon-8" data-scene-ref="scene-kanon-tradeoff" data-rail-ref="step-kanon">
+          <div class="step__inner">
+            <p class="step__eyebrow">K-Anonymity</p>
+            <h2>The tradeoff: choosing k</h2>
+            <p class="step__lead">Higher k = more privacy, but less specific data.</p>
+            <div class="step__point">
+              <strong>k = 5 (Typical)</strong><br>
+              Good balance. Sarah is one of 5 people. Age ranges are 10 years (30-40).
+            </div>
+            <div class="step__point">
+              <strong>k = 100 (Very Private)</strong><br>
+              Excellent privacy. Sarah is one of 100 people. But age ranges must be very broad (20-60).
+            </div>
+            <div class="step__point">
+              <strong>k = 2 (Risky)</strong><br>
+              Weak protection. Sarah is one of only 2 people. Still somewhat identifiable.
+            </div>
+          </div>
+        </article>
+
+        <!-- Step 9: Real-world impact -->
+        <article class="step step--beat" id="step-kanon-9" data-step="step-kanon-9" data-scene-ref="scene-kanon-impact" data-rail-ref="step-kanon">
+          <div class="step__inner">
+            <p class="step__eyebrow">K-Anonymity</p>
+            <h2>Real-world impact</h2>
+            <p class="step__lead">K-anonymity is used everywhere to protect sensitive data.</p>
+            <div class="step__example">
+              <strong>🏥 Healthcare</strong><br>
+              Hospitals use k-anonymity (k=5 to k=10) to share medical data for research while protecting patient privacy.
+            </div>
+            <div class="step__example">
+              <strong>📊 Census Data</strong><br>
+              Government census bureaus use k-anonymity to publish demographic statistics without exposing individuals.
+            </div>
+            <div class="step__example">
+              <strong>💳 Financial Records</strong><br>
+              Banks use k-anonymity to analyze spending patterns while protecting customer identities.
+            </div>
+          </div>
+        </article>
+
+      </section>
+
+      <aside class="viz-column" aria-label="Interactive visualization">
+        <div class="viz-shell">
+          <div class="viz-shell__wash" aria-hidden="true"></div>
+
+          <div class="viz-shell__header">
+            <div class="viz-shell__meta">
+              <p class="viz-shell__kicker" id="scene-kicker">Chapter 1</p>
+              <div class="viz-shell__count">
+                <span id="scene-count">01</span>
+                <span>/10</span>
+              </div>
+            </div>
+            <h2 id="scene-title">Differential privacy keeps one person from standing out</h2>
+            <p class="viz-shell__subtitle" id="scene-subtitle">
+              Change one person, and the released story should change only a little.
+            </p>
+          </div>
+
+          <section class="control-panel" aria-label="Visualization controls">
+            <div class="control-group is-hidden" id="truth-control-group">
+              <label class="control-label" for="truth-slider"
+                >Coin Bias (Probability of Truth)</label
+              >
+              <div class="control-inline">
+                <input
+                  aria-label="Coin Bias Probability of Truth"
+                  id="truth-slider"
+                  max="1"
+                  min="0"
+                  step="0.01"
+                  type="range"
+                  value="0.5"
+                />
+                <output id="truth-output" for="truth-slider">0.50</output>
+              </div>
+              <p class="control-helper" id="truth-helper">
+                p = 0.50 → 50% truth, 50% random.
+              </p>
+            </div>
+
+            <div class="control-group is-hidden" id="participants-control-group">
+              <label class="control-label" for="participants-input"
+                >Number of Participants</label
+              >
+              <input
+                aria-label="Number of participants"
+                id="participants-input"
+                inputmode="numeric"
+                max="5000"
+                min="1"
+                step="1"
+                type="number"
+                value="1000"
+              />
+              <p class="control-helper" id="participant-status">
+                The simulation starts with 1,000 participants.
+              </p>
+            </div>
+
+            <details class="teacher-panel" hidden id="teacher-panel">
+              <summary>Teacher Panel</summary>
+              <div class="teacher-panel__body">
+                <div class="teacher-panel__row">
+                  <button id="toggle-math-button" type="button">
+                    Show Math
+                  </button>
+                  <button id="pause-button" type="button">Pause</button>
+                </div>
+
+                <label class="control-label" for="true-rate-slider"
+                  >True YES rate</label
+                >
+                <div class="control-inline">
+                  <input
+                    aria-label="True yes rate"
+                    id="true-rate-slider"
+                    max="1"
+                    min="0.05"
+                    step="0.01"
+                    type="range"
+                    value="0.3"
+                  />
+                  <output id="true-rate-output" for="true-rate-slider"
+                    >30%</output
+                  >
+                </div>
+
+                <div class="preset-buttons" role="group" aria-label="Rate presets">
+                  <button data-preset="0.3" type="button">Student default 30/70</button>
+                  <button data-preset="0.7" type="button">Test preset 70/30</button>
+                </div>
+
+                <label class="control-label" for="slow-motion-slider"
+                  >Slow motion</label
+                >
+                <div class="control-inline">
+                  <input
+                    aria-label="Slow motion"
+                    id="slow-motion-slider"
+                    max="1"
+                    min="0.2"
+                    step="0.05"
+                    type="range"
+                    value="1"
+                  />
+                  <output id="slow-motion-output" for="slow-motion-slider"
+                    >100%</output
+                  >
+                </div>
+
+                <div class="math-panel is-hidden" id="math-panel">
+                  <p class="math-panel__title">Teacher note</p>
+                  <p class="math-panel__formula" id="math-formula-text">
+                    θ = (r - 0.5 × (1 - p)) / p
+                  </p>
+                  <p class="math-panel__detail" id="math-summary">
+                    Waiting for enough public answers to estimate the true YES
+                    rate.
+                  </p>
+                </div>
+
+                <div aria-live="polite" class="teacher-checks" id="teacher-checks"></div>
+              </div>
+            </details>
+          </section>
+
+          <!-- Interactive coin panel (Chapter 4) -->
+          <div class="coin-panel is-hidden" id="coin-interactive-panel">
+
+            <!-- Question card -->
+            <div class="cp-question">
+              <span class="cp-question__tag">🎯 Survey Question</span>
+              <p class="cp-question__text">&ldquo;Did you vote for the name <strong>Carl</strong>?&rdquo;</p>
+            </div>
+
+            <!-- Rules -->
+            <div class="cp-rules">
+              <span class="cp-rule cp-rule--heads">🎯 Heads = Tell the truth</span>
+              <span class="cp-rule-sep">|</span>
+              <span class="cp-rule cp-rule--tails">🔄 Tails = Flip again! Then click Yes/No randomly</span>
+            </div>
+
+            <!-- STATE: idle — show coin ready to flip -->
+            <div class="cp-state" id="cp-state-idle">
+              <div class="cp-coin-wrap">
+                <div class="cp-coin" id="cp-coin">
+                  <div class="cp-coin__inner" id="cp-coin-inner">
+                    <div class="cp-coin__face cp-coin__face--front">
+                      <span class="cp-coin__word">Flip</span>
+                      <span class="cp-coin__sub">the coin</span>
+                    </div>
+                    <div class="cp-coin__face cp-coin__face--back" id="cp-coin-back">
+                      <span class="cp-coin__word" id="cp-back-word">?</span>
+                      <span class="cp-coin__sub" id="cp-back-sub"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button class="cp-btn cp-btn--primary" id="cp-flip-btn" type="button">
+                Flip the Coin 🪙
+              </button>
+            </div>
+
+            <!-- STATE: heads result -->
+            <div class="cp-state cp-state--hidden" id="cp-state-heads">
+              <div class="cp-result-badge cp-result-badge--heads">🟡 Heads!</div>
+              <p class="cp-result-msg">Tell the truth. What is your real answer?</p>
+              <div class="cp-answer-row">
+                <button class="cp-answer-btn cp-answer-btn--yes" id="cp-heads-yes" type="button">👍 Yes</button>
+                <button class="cp-answer-btn cp-answer-btn--no"  id="cp-heads-no"  type="button">👎 No</button>
+              </div>
+            </div>
+
+            <!-- STATE: tails — countdown then flip again -->
+            <div class="cp-state cp-state--hidden" id="cp-state-tails">
+              <div class="cp-result-badge cp-result-badge--tails">🔵 Tails!</div>
+              <p class="cp-result-msg">You must flip again in…</p>
+              <div class="cp-countdown" id="cp-countdown">
+                <svg class="cp-countdown__svg" viewBox="0 0 64 64" aria-hidden="true">
+                  <circle class="cp-countdown__track" cx="32" cy="32" r="26"/>
+                  <circle class="cp-countdown__fill" cx="32" cy="32" r="26" id="cp-countdown-ring"/>
+                </svg>
+                <span class="cp-countdown__num" id="cp-countdown-num">2</span>
+              </div>
+              <p class="cp-result-sub">Get ready to flip again…</p>
+            </div>
+
+            <!-- STATE: second flip ready -->
+            <div class="cp-state cp-state--hidden" id="cp-state-reflip">
+              <div class="cp-result-badge cp-result-badge--tails">🔄 Flip Again!</div>
+              <p class="cp-result-msg">This time answer <strong>randomly</strong> — don&rsquo;t think about the truth.</p>
+              <div class="cp-coin-wrap">
+                <div class="cp-coin" id="cp-coin-2">
+                  <div class="cp-coin__inner" id="cp-coin-inner-2">
+                    <div class="cp-coin__face cp-coin__face--front">
+                      <span class="cp-coin__word">Flip</span>
+                      <span class="cp-coin__sub">again</span>
+                    </div>
+                    <div class="cp-coin__face cp-coin__face--back" id="cp-coin-back-2">
+                      <span class="cp-coin__word" id="cp-back-word-2">?</span>
+                      <span class="cp-coin__sub" id="cp-back-sub-2"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button class="cp-btn cp-btn--primary" id="cp-reflip-btn" type="button">
+                Flip Again 🪙
+              </button>
+            </div>
+
+            <!-- STATE: random answer (after second flip) -->
+            <div class="cp-state cp-state--hidden" id="cp-state-random">
+              <div class="cp-result-badge cp-result-badge--random" id="cp-random-badge">🎲 Answer randomly!</div>
+              <p class="cp-result-msg">Pick <strong>Yes or No randomly</strong> — don&rsquo;t think about the truth!</p>
+              <div class="cp-answer-row">
+                <button class="cp-answer-btn cp-answer-btn--yes" id="cp-random-yes" type="button">👍 Yes</button>
+                <button class="cp-answer-btn cp-answer-btn--no"  id="cp-random-no"  type="button">👎 No</button>
+              </div>
+            </div>
+
+            <!-- STATE: submitted -->
+            <div class="cp-state cp-state--hidden" id="cp-state-done">
+              <div class="cp-done__icon">🔒</div>
+              <p class="cp-done__msg" id="cp-done-msg"></p>
+              <p class="cp-done__sub">Your real answer is protected. The collector only sees your public report.</p>
+              <div class="cp-done__stats">
+                <div class="cp-done__stat">
+                  <span>Your public answer</span>
+                  <strong id="cp-stat-answer">—</strong>
+                </div>
+                <div class="cp-done__stat">
+                  <span>How it was decided</span>
+                  <strong id="cp-stat-method">—</strong>
+                </div>
+                <div class="cp-done__stat">
+                  <span>Session tally</span>
+                  <strong id="cp-stat-tally">—</strong>
+                </div>
+              </div>
+              <button class="cp-btn cp-btn--ghost" id="cp-retry-btn" type="button">🔄 Try again</button>
+            </div>
+
+          </div><!-- /.coin-panel -->
+
+          <!-- Who Why Panel (step-1b2) -->
+          <div class="who-why-panel is-hidden" id="who-why-panel"></div>
+
+          <div class="viz-stage" id="viz-stage">
+            <canvas id="particle-canvas"></canvas>
+            <svg
+              aria-hidden="true"
+              id="viz-overlay"
+              preserveAspectRatio="xMidYMid meet"
+            ></svg>
+          </div>
+
+          <!-- Company Cards Panel (Chapter 1c: Why use it?) -->
+          <div class="company-cards-panel is-hidden" id="company-cards-panel" aria-label="Real-world examples">
+            <!-- TikTok Card -->
+            <div class="company-card company-card--expanded" data-company="tiktok">
+              <div class="company-card__header">
+                <span class="company-card__icon">🎵</span>
+                <div class="company-card__title-group">
+                  <h3 class="company-card__name">TikTok</h3>
+                  <p class="company-card__category">Social media platform</p>
+                </div>
+              </div>
+              <div class="company-card__body">
+                <p class="company-card__description">
+                  TikTok's PrivacyGo program uses DP to measure ad campaign reach and conversion rates 
+                  without ever exposing which videos any individual user watched.
+                </p>
+              </div>
+              <button class="company-card__toggle" type="button" aria-expanded="true">
+                <span class="company-card__toggle-text">Click to expand</span>
+              </button>
+            </div>
+
+            <!-- Apple Card -->
+            <div class="company-card" data-company="apple">
+              <div class="company-card__header">
+                <span class="company-card__icon">🍎</span>
+                <div class="company-card__title-group">
+                  <h3 class="company-card__name">Apple</h3>
+                  <p class="company-card__category">Device & software maker</p>
+                </div>
+              </div>
+              <div class="company-card__body">
+                <p class="company-card__description">
+                  Apple uses differential privacy to learn popular emoji, keyboard suggestions, and Safari 
+                  browsing patterns for energy efficiency — all while keeping individual data private on your device.
+                </p>
+              </div>
+              <button class="company-card__toggle" type="button" aria-expanded="false">
+                <span class="company-card__toggle-text">Click to expand</span>
+              </button>
+            </div>
+
+            <!-- Meta Card -->
+            <div class="company-card" data-company="meta">
+              <div class="company-card__header">
+                <span class="company-card__icon">👤</span>
+                <div class="company-card__title-group">
+                  <h3 class="company-card__name">Meta</h3>
+                  <p class="company-card__category">Social networking</p>
+                </div>
+              </div>
+              <div class="company-card__body">
+                <p class="company-card__description">
+                  Meta applies differential privacy to aggregate insights about user behavior and platform trends 
+                  while protecting individual privacy in social network analytics.
+                </p>
+              </div>
+              <button class="company-card__toggle" type="button" aria-expanded="false">
+                <span class="company-card__toggle-text">Click to expand</span>
+              </button>
+            </div>
+
+            <!-- US Bureau Card -->
+            <div class="company-card" data-company="us-bureau">
+              <div class="company-card__header">
+                <span class="company-card__icon">📊</span>
+                <div class="company-card__title-group">
+                  <h3 class="company-card__name">US Bureau of Labor Statistics</h3>
+                  <p class="company-card__category">Government agency</p>
+                </div>
+              </div>
+              <div class="company-card__body">
+                <p class="company-card__description">
+                  The US Bureau of Labor Statistics uses differential privacy to publish employment statistics 
+                  and economic data while protecting the confidentiality of individual respondents and businesses.
+                </p>
+              </div>
+              <button class="company-card__toggle" type="button" aria-expanded="false">
+                <span class="company-card__toggle-text">Click to expand</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Student Voting Panel (Captain's View) -->
+          <div class="student-voting-panel is-hidden" id="student-voting-panel" aria-label="Class captain's view of votes">
+            <div class="student-voting-panel__header">
+              <span class="student-voting-panel__badge">🎓 Class Captain's List</span>
+              <p class="student-voting-panel__subtitle">Click on any student to see their vote</p>
+            </div>
+            
+            <div class="student-list">
+              <!-- Student 1 -->
+              <div class="student-item" data-student="1" data-vote="rizz">
+                <div class="student-avatar">👧🏿</div>
+                <div class="student-info">
+                  <div class="student-name">Student 1</div>
+                  <div class="student-vote is-hidden">Voted for: <strong>Rizz Rodent</strong></div>
+                </div>
+              </div>
+              
+              <!-- Student 2 -->
+              <div class="student-item" data-student="2" data-vote="rizz">
+                <div class="student-avatar">👦🏻</div>
+                <div class="student-info">
+                  <div class="student-name">Student 2</div>
+                  <div class="student-vote is-hidden">Voted for: <strong>Rizz Rodent</strong></div>
+                </div>
+              </div>
+              
+              <!-- Student 3 (You - voted for Carl) -->
+              <div class="student-item student-item--you" data-student="3" data-vote="carl">
+                <div class="student-avatar">👨🏾‍🦲</div>
+                <div class="student-info">
+                  <div class="student-name">You</div>
+                  <div class="student-vote is-hidden">Voted for: <strong>Carl</strong> 🤫</div>
+                </div>
+              </div>
+              
+              <!-- Student 4 -->
+              <div class="student-item" data-student="4" data-vote="squeaker">
+                <div class="student-avatar">👱🏼‍♀️</div>
+                <div class="student-info">
+                  <div class="student-name">Student 4</div>
+                  <div class="student-vote is-hidden">Voted for: <strong>6-7 Squeaker</strong></div>
+                </div>
+              </div>
+              
+              <!-- Student 5 -->
+              <div class="student-item" data-student="5" data-vote="squeaker">
+                <div class="student-avatar">🧕🏽</div>
+                <div class="student-info">
+                  <div class="student-name">Student 5</div>
+                  <div class="student-vote is-hidden">Voted for: <strong>6-7 Squeaker</strong></div>
+                </div>
+              </div>
+              
+              <!-- Student 6 -->
+              <div class="student-item" data-student="6" data-vote="squeaker">
+                <div class="student-avatar">🧑🏽</div>
+                <div class="student-info">
+                  <div class="student-name">Student 6</div>
+                  <div class="student-vote is-hidden">Voted for: <strong>6-7 Squeaker</strong></div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="student-voting-panel__warning">
+              <span class="warning-icon">⚠️</span>
+              <p><strong>Privacy Problem:</strong> The captain can see everyone's vote! Your vote for Carl isn't private.</p>
+            </div>
+          </div>
+
+          <!-- K-Anonymity Medical Records Panel -->
+          <div class="kanon-panel is-hidden" id="kanon-panel">
+            
+            <!-- Panel 1: Sarah's Record (Step 1) -->
+            <div class="kanon-viz kanon-viz--sarah is-hidden" id="kanon-viz-sarah">
+              <div class="kanon-card-single">
+                <div class="kanon-person-icon">👩‍⚕️</div>
+                <h3>Sarah's Medical Record</h3>
+                <div class="kanon-record-large">
+                  <div class="kanon-field-large">
+                    <span class="kanon-label">Age:</span>
+                    <span class="kanon-value">34</span>
+                  </div>
+                  <div class="kanon-field-large">
+                    <span class="kanon-label">ZIP Code:</span>
+                    <span class="kanon-value">85281</span>
+                  </div>
+                  <div class="kanon-field-large">
+                    <span class="kanon-label">Condition:</span>
+                    <span class="kanon-value">Heart Disease</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Panel 2: Database Exposed (Step 2) -->
+            <div class="kanon-viz kanon-viz--exposed is-hidden" id="kanon-viz-exposed">
+              <div class="kanon-danger-card">
+                <div class="kanon-search-bar">
+                  <span class="search-icon">🔍</span>
+                  <span class="search-text">Search: 34-year-old, ZIP 85281</span>
+                </div>
+                <div class="kanon-search-result">
+                  <div class="result-found">✓ 1 Match Found</div>
+                  <div class="kanon-person-icon">👩‍⚕️</div>
+                  <div class="person-name">Sarah Johnson</div>
+                  <div class="kanon-record-exposed">
+                    <div>Age: 34</div>
+                    <div>ZIP: 85281</div>
+                    <div>Condition: Heart Disease</div>
+                  </div>
+                  <div class="k-value-bad">k = 1 (EXPOSED!)</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Panel 3: K-Anonymity Definition (Step 3) -->
+            <div class="kanon-viz kanon-viz--definition is-hidden" id="kanon-viz-definition">
+              <div class="kanon-concept-card">
+                <h3>K-Anonymity Explained</h3>
+                <div class="kanon-formula">
+                  <div class="formula-box">k ≥ 5</div>
+                  <div class="formula-text">At least 5 people share the same attributes</div>
+                </div>
+                <div class="kanon-comparison-icons">
+                  <div class="icon-group">
+                    <div class="icon-label">Without K-Anonymity</div>
+                    <div class="single-person">👤</div>
+                    <div class="k-label">k = 1</div>
+                  </div>
+                  <div class="arrow-between">→</div>
+                  <div class="icon-group">
+                    <div class="icon-label">With K-Anonymity</div>
+                    <div class="group-people">👥👥👥</div>
+                    <div class="k-label k-label-good">k = 5</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Panel 4: Transformation (Step 4) -->
+            <div class="kanon-viz kanon-viz--transform is-hidden" id="kanon-viz-transform">
+              <div class="transformation-display">
+                <div class="transform-row">
+                  <div class="original-value">Age: 34</div>
+                  <div class="transform-arrow">→</div>
+                  <div class="anonymized-value">Age Range: 30-40</div>
+                </div>
+                <div class="transform-row">
+                  <div class="original-value">ZIP: 85281</div>
+                  <div class="transform-arrow">→</div>
+                  <div class="anonymized-value">ZIP Area: 852**</div>
+                </div>
+                <div class="transform-row">
+                  <div class="original-value">Condition: Heart Disease</div>
+                  <div class="transform-arrow">→</div>
+                  <div class="anonymized-value">Condition: Heart Disease</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Panel 5: Group Display (Step 5) -->
+            <div class="kanon-viz kanon-viz--group is-hidden" id="kanon-viz-group">
+              <div class="group-display">
+                <h3>5 People Share These Attributes</h3>
+                <div class="shared-attrs">
+                  <div>Age: 30-40 | ZIP: 852** | Condition: Heart Disease</div>
+                </div>
+                <div class="people-grid">
+                  <div class="person-card">
+                    <div class="person-icon">👩‍⚕️</div>
+                    <div class="person-label">Person 1</div>
+                  </div>
+                  <div class="person-card person-highlight">
+                    <div class="person-icon">👩‍⚕️</div>
+                    <div class="person-label">Sarah</div>
+                  </div>
+                  <div class="person-card">
+                    <div class="person-icon">👨‍⚕️</div>
+                    <div class="person-label">Person 3</div>
+                  </div>
+                  <div class="person-card">
+                    <div class="person-icon">👴</div>
+                    <div class="person-label">Person 4</div>
+                  </div>
+                  <div class="person-card">
+                    <div class="person-icon">👵</div>
+                    <div class="person-label">Person 5</div>
+                  </div>
+                </div>
+                <div class="k-value-good-large">k = 5 ✓ Privacy Protected!</div>
+              </div>
+            </div>
+
+            <!-- Panel 6: Interactive Input (Step 6) -->
+            <div class="kanon-viz kanon-viz--input is-hidden" id="kanon-viz-input">
+              <div class="kanon-panel__container">
+                <div class="kanon-input-section" id="kanon-input-section">
+                  <h3 class="kanon-section-title">🏥 Enter Your Information</h3>
+                  <p class="kanon-section-subtitle">See how exposed you are in a hospital database</p>
+                  
+                  <div class="kanon-form">
+                    <div class="kanon-form-group">
+                      <label for="kanon-age">Your Age:</label>
+                      <input type="number" id="kanon-age" min="1" max="120" placeholder="e.g., 34" />
+                    </div>
+                    
+                    <div class="kanon-form-group">
+                      <label for="kanon-zip">Your ZIP Code:</label>
+                      <input type="text" id="kanon-zip" maxlength="5" placeholder="e.g., 85281" />
+                    </div>
+                    
+                    <div class="kanon-form-group">
+                      <label for="kanon-condition">Health Concern:</label>
+                      <select id="kanon-condition">
+                        <option value="">-- Select --</option>
+                        <option value="Heart Disease">Heart Disease</option>
+                        <option value="Diabetes">Diabetes</option>
+                        <option value="Asthma">Asthma</option>
+                        <option value="High Blood Pressure">High Blood Pressure</option>
+                        <option value="Arthritis">Arthritis</option>
+                      </select>
+                    </div>
+                    
+                    <button class="kanon-submit-btn" id="kanon-submit-btn">Submit to Database</button>
+                  </div>
+                </div>
+
+                <div class="kanon-comparison is-hidden" id="kanon-comparison">
+                  <div class="kanon-before">
+                    <div class="kanon-card kanon-card--danger">
+                      <h4 class="kanon-card-title">❌ BEFORE</h4>
+                      <div class="kanon-record" id="kanon-record-before">
+                        <div class="kanon-field"><strong>Age:</strong> <span id="before-age">34</span></div>
+                        <div class="kanon-field"><strong>ZIP:</strong> <span id="before-zip">85281</span></div>
+                        <div class="kanon-field"><strong>Condition:</strong> <span id="before-condition">Heart Disease</span></div>
+                      </div>
+                      <div class="kanon-icon">👤</div>
+                      <div class="kanon-warning">
+                        <strong>Only 1 person matches</strong>
+                        <div class="kanon-k-value">k = 1</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="kanon-arrow">
+                    <button class="kanon-anonymize-btn is-hidden" id="kanon-anonymize-btn">
+                      🔒 Anonymize →
+                    </button>
+                  </div>
+
+                  <div class="kanon-after">
+                    <div class="kanon-card kanon-card--success is-hidden" id="kanon-after-card">
+                      <h4 class="kanon-card-title">✅ AFTER</h4>
+                      <div class="kanon-record" id="kanon-record-after">
+                        <div class="kanon-field"><strong>Age Range:</strong> <span id="after-age">30-40</span></div>
+                        <div class="kanon-field"><strong>ZIP Area:</strong> <span id="after-zip">852**</span></div>
+                        <div class="kanon-field"><strong>Condition:</strong> <span id="after-condition">Heart Disease</span></div>
+                      </div>
+                      <div class="kanon-icon">👥👥</div>
+                      <div class="kanon-success">
+                        <strong>5+ people match</strong>
+                        <div class="kanon-k-value">k ≥ 5</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <button class="kanon-reset-btn is-hidden" id="kanon-reset-btn">↻ Try Again</button>
+              </div>
+            </div>
+
+            <!-- Panel 7-9: Static info panels can reuse viz-stage or simple text -->
+            
+          </div>
+
+          <!-- Epsilon viz panel (Chapters 6 & 7) -->
+          <div class="eps-panel is-hidden" id="eps-panel">
+
+            <!-- Chapter 6: True dataset (static) -->
+            <div class="eps-state" id="eps-state-setup">
+              <div class="eps-panel__header">
+                <span class="eps-panel__badge">🐹 True Dataset &mdash; 1 Million Votes</span>
+                <span class="eps-panel__meta">Before any noise &middot; Exact counts</span>
+              </div>
+              <div class="eps-panel__question">
+                &ldquo;Which name do you vote for the class gerbil?&rdquo;
+              </div>
+              <div class="eps-true-bars" id="eps-true-bars">
+                <!-- rendered by JS -->
+              </div>
+              <p class="eps-panel__note">
+                This is what the health department (or school) actually stores. Publishing these
+                exact numbers would let anyone narrow down individuals. That&rsquo;s the problem &epsilon; solves.
+              </p>
+            </div>
+
+            <!-- Chapter 7: Live noisy dataset -->
+            <div class="eps-state eps-state--hidden" id="eps-state-live">
+              <div class="eps-panel__header">
+                <span class="eps-panel__badge">🔊 Published (Noisy) Dataset</span>
+                <span class="eps-panel__meta" id="eps-live-meta">&epsilon; = 1.00 &middot; Laplace noise applied</span>
+              </div>
+
+              <!-- Epsilon slider -->
+              <div class="eps-slider-group">
+                <label class="eps-slider-label" for="eps-slider">
+                  Privacy knob &mdash; Epsilon (&epsilon;)
+                </label>
+                <div class="eps-slider-row">
+                  <span class="eps-slider-edge">0.1<br><small>Max privacy</small></span>
+                  <input class="eps-slider" id="eps-slider" type="range" min="0.1" max="5.0" step="0.05" value="1.0" aria-label="Epsilon value">
+                  <span class="eps-slider-edge eps-slider-edge--right">5.0<br><small>Max accuracy</small></span>
+                </div>
+                <div class="eps-slider-readout">
+                  <span class="eps-readout-val">&epsilon; = <strong id="eps-val-display">1.00</strong></span>
+                  <span class="eps-readout-desc" id="eps-desc">Moderate privacy &mdash; counts shift noticeably</span>
+                </div>
+              </div>
+
+              <!-- Dual chart: pie + bar -->
+              <div class="eps-charts-grid">
+                <div class="eps-chart-card">
+                  <p class="eps-chart-title">Privacy exposure</p>
+                  <div class="eps-pie-wrap">
+                    <canvas id="eps-pie-canvas" width="160" height="160" aria-label="Privacy exposure pie chart"></canvas>
+                    <div class="eps-pie-legend">
+                      <span class="eps-pie-legend__item eps-pie-legend__item--safe">Safe</span>
+                      <span class="eps-pie-legend__item eps-pie-legend__item--leak">Leak risk</span>
+                    </div>
+                  </div>
+                  <p class="eps-pie-label" id="eps-pie-label">11.8% leak probability</p>
+                </div>
+                <div class="eps-chart-card eps-chart-card--bar">
+                  <p class="eps-chart-title">Noisy vote counts vs true counts</p>
+                  <canvas id="eps-bar-canvas" width="320" height="180" aria-label="Noisy vs true vote counts bar chart"></canvas>
+                  <p class="eps-bar-note">Blue = true count &middot; Red = noisy published count &middot; Error bars = noise range</p>
+                </div>
+              </div>
+
+              <p class="eps-panel__note" id="eps-bottom-note">
+                At &epsilon; = 1.00, the counts shift by roughly &plusmn;3&ndash;4 people per million. Privacy is protected; the crowd pattern is still clear.
+              </p>
+            </div>
+
+          </div><!-- /.eps-panel -->
+
+          <!-- DB results panel (Chapter 5) -->
+          <div class="db-results-panel is-hidden" id="db-results-panel" aria-label="Aggregate survey results">
+            <div class="db-results-panel__header">
+              <span class="db-results-panel__badge">📊 Aggregate Results</span>
+              <span class="db-results-panel__meta">n = 847 participants &middot; p = 0.65 &middot; Randomized Response</span>
+            </div>
+            <div class="db-results-panel__question">
+              &ldquo;Did you vote for the name <strong>Carl</strong>?&rdquo;
+            </div>
+            <div class="db-results-panel__bars">
+              <div class="db-bar-row">
+                <span class="db-bar-row__label">Public YES</span>
+                <div class="db-bar-row__track">
+                  <div class="db-bar-row__fill db-bar-row__fill--yes" style="width:0%" data-target="38"></div>
+                </div>
+                <span class="db-bar-row__count" id="db-public-yes">0</span>
+              </div>
+              <div class="db-bar-row">
+                <span class="db-bar-row__label">Public NO</span>
+                <div class="db-bar-row__track">
+                  <div class="db-bar-row__fill db-bar-row__fill--no" style="width:0%" data-target="62"></div>
+                </div>
+                <span class="db-bar-row__count" id="db-public-no">0</span>
+              </div>
+            </div>
+            <div class="db-results-panel__estimate">
+              <div class="db-estimate-card">
+                <span class="db-estimate-card__label">Raw public YES</span>
+                <strong class="db-estimate-card__value" id="db-raw-yes">—</strong>
+              </div>
+              <div class="db-estimate-card db-estimate-card--highlight">
+                <span class="db-estimate-card__label">Estimated true YES rate</span>
+                <strong class="db-estimate-card__value" id="db-estimated-true">—</strong>
+                <span class="db-estimate-card__formula">θ = (r − 0.5×(1−p)) / p</span>
+              </div>
+              <div class="db-estimate-card">
+                <span class="db-estimate-card__label">Privacy budget used</span>
+                <strong class="db-estimate-card__value" id="db-privacy-budget">ε ≈ 1.1</strong>
+              </div>
+              <div class="db-estimate-card">
+                <span class="db-estimate-card__label">Participants</span>
+                <strong class="db-estimate-card__value">847</strong>
+              </div>
+            </div>
+            <p class="db-results-panel__footnote">
+              No individual answer was exposed. The true rate is <em>estimated</em> from the noisy public answers using the correction formula above.
+            </p>
+          </div>
+
+          <section class="viz-footer" aria-label="Live simulation results">
+            <div class="stat-card" id="stat-card-yes">
+              <span>Public YES</span>
+              <strong id="public-yes-count">0</strong>
+            </div>
+            <div class="stat-card" id="stat-card-no">
+              <span>Public NO</span>
+              <strong id="public-no-count">0</strong>
+            </div>
+            <div class="stat-card" id="stat-card-true-rate">
+              <span>True YES rate</span>
+              <strong id="true-yes-rate-display">30%</strong>
+            </div>
+            <div class="stat-card stat-card--wide">
+              <span>Status</span>
+              <strong id="viz-status">Ready to scroll</strong>
+            </div>
+          </section>
+        </div>
+      </aside>
+    </main>
+
+    <section class="references" aria-labelledby="references-title">
+      <div class="references__inner">
+        <p class="hero__eyebrow">Sources</p>
+        <h2 id="references-title">References behind the story</h2>
+        <ol class="references__list">
+          <li id="ref-dp-def">
+            OpenDP introduction and overview:
+            <a href="https://registry.opendp.org/intro-to-dp/"
+              >Intro to DP, including the Randomized Response Surveys lesson</a
+            >,
+            Differential Privacy definition:
+            <a href="https://opendp.org/what-is-differential-privacy/"
+              >OpenDP overview</a
+            >
+            and
+            <a href="https://dwork.seas.harvard.edu/publications/differential-privacy"
+              >Cynthia Dwork publication page</a
+            >.
+          </li>
+          <li id="ref-rappor">
+            Google RAPPOR overview:
+            <a
+              href="https://research.google/pubs/rappor-randomized-aggregatable-privacy-preserving-ordinal-response/"
+              >RAPPOR landing page</a
+            >.
+          </li>
+          <li id="ref-apple-dp">
+            Apple:
+            <a href="https://www.apple.com/privacy/docs/Differential_Privacy_Overview.pdf"
+              >Differential Privacy Overview</a
+            >.
+          </li>
+          <li id="ref-apple-ml">
+            Apple Machine Learning Research:
+            <a href="https://machinelearning.apple.com/research/learning-with-privacy-at-scale"
+              >Learning with Privacy at Scale</a
+            >.
+          </li>
+          <li id="ref-privacygo">
+            TikTok PrivacyGo:
+            <a href="https://github.com/tiktok-privacy-innovation/PrivacyGo"
+              >GitHub repository</a
+            >
+            and
+            <a href="https://developers.tiktok.com/blog/privacy-go"
+              >developer blog overview</a
+            >.
+          </li>
+          <li id="ref-privacygo-paper">
+            PrivacyGo preprint:
+            <a href="https://arxiv.org/abs/2506.20981">arXiv paper</a>.
+          </li>
+          <li id="ref-warner">
+            Warner, S. L. (1965). “Randomized response: a survey technique for
+            eliminating evasive answer bias.”
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <div class="controls-hud" data-open="false">
+      <button
+        class="controls-hud__toggle"
+        id="controls-hud-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="controls-hud-panel"
+        aria-label="Show keyboard controls"
+      >
+        i
+      </button>
+      <aside class="controls-hud__panel" id="controls-hud-panel" hidden>
+        <p class="controls-hud__title">Controls</p>
+        <div class="controls-hud__row">
+          <span>Next beat</span>
+          <span class="controls-hud__keys">
+            <kbd>j</kbd>
+            <kbd>l</kbd>
+            <kbd>&darr;</kbd>
+            <kbd>&rarr;</kbd>
+          </span>
+        </div>
+        <div class="controls-hud__row">
+          <span>Previous beat</span>
+          <span class="controls-hud__keys">
+            <kbd>h</kbd>
+            <kbd>k</kbd>
+            <kbd>&uarr;</kbd>
+            <kbd>&larr;</kbd>
+          </span>
+        </div>
+        <div class="controls-hud__row">
+          <span>Toggle key</span>
+          <span class="controls-hud__keys">
+            <kbd>?</kbd>
+            <kbd>/</kbd>
+          </span>
+        </div>
+      </aside>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+    <script src="https://unpkg.com/scrollama"></script>
+    
+    <!-- Content System: Load content first, then builder, then main -->
+    <script src="content.js"></script>
+    <script src="content-builder.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>

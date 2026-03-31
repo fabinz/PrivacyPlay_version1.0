@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Content System Test</title>
+</head>
+<body>
+    <h1>Testing Content System...</h1>
+    <div id="output"></div>
+    
+    <script src="content.js"></script>
+    <script>
+        if (typeof CONTENT !== 'undefined') {
+            document.getElementById('output').innerHTML = 
+                '<p>✅ content.js loaded!</p>' +
+                '<p>Hero title: ' + CONTENT.hero.title + '</p>' +
+                '<p>Chapter 1 title: ' + CONTENT.chapter1.step1.title + '</p>' +
+                '<p>Companies: ' + CONTENT.chapter1.step1c.companies.length + '</p>';
+        } else {
+            document.getElementById('output').innerHTML = '<p>❌ content.js NOT loaded!</p>';
+        }
+    </script>
+</body>
+</html>
